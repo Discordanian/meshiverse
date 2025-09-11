@@ -1,16 +1,16 @@
 # Godot 4+ specific ignores
-godot/meshiverse/.godot/
-godot/meshiverse/.nomedia
+godot/.godot/
+godot/.nomedia
 
 # Godot-specific ignores
-godot/meshiverse/.import/
-godot/meshiverse/export.cfg
-godot/meshiverse/export_credentials.cfg
+godot/.import/
+godot/export.cfg
+godot/export_credentials.cfg
 
 # Imported translations (automatically generated from CSV files)
-godot/meshiverse/*.translation
+godot/*.translation
 
 # Mono-specific ignores
-godot/meshiverse/.mono/
-godot/meshiverse/data_*/
-godot/meshiverse/mono_crash.*.json
+godot/.mono/
+godot/data_*/
+godot/mono_crash.*.json
