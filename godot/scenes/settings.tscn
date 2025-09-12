@@ -41,6 +41,7 @@ theme_override_constants/margin_bottom = 20
 oversampling_override = 1.0
 title = "Open a Directory"
 initial_position = 2
+size = Vector2i(640, 640)
 ok_button_text = "Select"
 dialog_hide_on_ok = true
 file_mode = 2
@@ -70,6 +71,9 @@ vertical_alignment = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Seperator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
 [node name="MeshiverseDirectory" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Meshiverse Directory"
@@ -83,4 +87,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Meshiverse Directory Location"
 
+[connection signal="dir_selected" from="MarginContainer/DirectorySelector" to="." method="_on_directory_selector_dir_selected"]
 [connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer/SelectDirectory" to="." method="_on_select_directory_button_down"]
