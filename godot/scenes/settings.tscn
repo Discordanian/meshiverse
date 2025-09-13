@@ -15,7 +15,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_r6d6q")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="SettingWallpaper" type="TextureRect" parent="."]
+modulate = Color(0.28668356, 0.2866836, 0.28668356, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +38,20 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="DirectorySelector" type="FileDialog" parent="MarginContainer"]
+[node name="OpenSelector" type="FileDialog" parent="MarginContainer"]
+oversampling_override = 1.0
+title = "Open a File"
+position = Vector2i(0, 36)
+dialog_hide_on_ok = true
+file_mode = 0
+display_mode = 1
+access = 2
+root_subfolder = "user://"
+filters = PackedStringArray("meshiverse.ini")
+use_native_dialog = true
+folder_creation_enabled = false
+
+[node name="NewSelector" type="FileDialog" parent="MarginContainer"]
 oversampling_override = 1.0
 title = "Open a Directory"
 initial_position = 2
@@ -47,6 +61,7 @@ dialog_hide_on_ok = true
 file_mode = 2
 display_mode = 1
 access = 2
+root_subfolder = "user://"
 show_hidden_files = true
 use_native_dialog = true
 
@@ -68,24 +83,32 @@ theme_override_font_sizes/font_size = 72
 text = "Meshiverse"
 vertical_alignment = 1
 
+[node name="Seperator2" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Seperator2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="New" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "Create New Meshiverse"
 
-[node name="MeshiverseDirectory" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Open" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Meshiverse Directory"
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "Open Existing Meshiverse"
 
-[node name="SelectDirectory" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Select Directory"
-
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="DisplayDirectory" type="LineEdit" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
 placeholder_text = "Meshiverse Directory Location"
+editable = false
 
-[connection signal="dir_selected" from="MarginContainer/DirectorySelector" to="." method="_on_directory_selector_dir_selected"]
-[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer/SelectDirectory" to="." method="_on_select_directory_button_down"]
+[connection signal="file_selected" from="MarginContainer/OpenSelector" to="." method="_on_open_selector_file_selected"]
+[connection signal="dir_selected" from="MarginContainer/NewSelector" to="." method="_on_directory_selector_dir_selected"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer/New" to="." method="_on_select_directory_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer/Open" to="." method="_on_open_button_down"]
