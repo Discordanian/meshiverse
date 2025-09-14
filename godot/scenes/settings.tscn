@@ -92,13 +92,13 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 24
-text = "Create New Meshiverse"
+text = "New Library"
 
 [node name="Open" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 24
-text = "Open Existing Meshiverse"
+text = "Open Library"
 
 [node name="DisplayDirectory" type="LineEdit" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
