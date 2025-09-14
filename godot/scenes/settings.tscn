@@ -47,7 +47,6 @@ file_mode = 0
 display_mode = 1
 access = 2
 root_subfolder = "user://"
-filters = PackedStringArray("meshiverse.ini")
 use_native_dialog = true
 folder_creation_enabled = false
 
