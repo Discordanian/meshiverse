@@ -1,15 +1,18 @@
 extends Control
 
 var verse_dir: String = "Select Directory"
+@onready var open_dialog: FileDialog = $MarginContainer/OpenSelector
+@onready var new_dialog: FileDialog = $MarginContainer/NewSelector
+@onready var library_location_label: LineEdit = $MarginContainer/VBoxContainer/DisplayDirectory
 
 # Read Global Config
 func _ready() -> void:
-	$MarginContainer/VBoxContainer/DisplayDirectory.text = verse_dir
-	$MarginContainer/OpenSelector.add_filter("meshiverse.ini","Meshiverse settings file")
+	library_location_label.text = verse_dir
+	$MarginContainer/OpenSelector.add_filter("meshiverse.cfg","Meshiverse settings file")
 
 
 func _on_select_directory_button_down() -> void:
-	$MarginContainer/NewSelector.popup()
+	new_dialog.popup()
 
 
 func _on_directory_selector_dir_selected(dir: String) -> void:
@@ -17,7 +20,7 @@ func _on_directory_selector_dir_selected(dir: String) -> void:
 
 
 func _on_open_button_down() -> void:
-	$MarginContainer/OpenSelector.popup()
+	open_dialog.popup()
 
 
 func _on_open_selector_file_selected(path: String) -> void:
@@ -25,4 +28,4 @@ func _on_open_selector_file_selected(path: String) -> void:
 	
 func set_vault_directory(dir: String) -> void:
 	verse_dir = dir
-	$MarginContainer/VBoxContainer/DisplayDirectory.text = dir
+	library_location_label.text = dir
