@@ -7,25 +7,25 @@ var verse_dir: String = "Select Directory"
 
 # Read Global Config
 func _ready() -> void:
-	library_location_label.text = verse_dir
-	$MarginContainer/OpenSelector.add_filter("meshiverse.cfg","Meshiverse settings file")
+    library_location_label.text = verse_dir
+    $MarginContainer/OpenSelector.add_filter("meshiverse.cfg","Meshiverse settings file")
 
 
 func _on_select_directory_button_down() -> void:
-	new_dialog.popup()
+    new_dialog.popup()
 
 
 func _on_directory_selector_dir_selected(dir: String) -> void:
-	set_vault_directory(dir)
+    set_vault_directory(dir)
 
 
 func _on_open_button_down() -> void:
-	open_dialog.popup()
+    open_dialog.popup()
 
 
 func _on_open_selector_file_selected(path: String) -> void:
-	set_vault_directory(path.get_base_dir())
-	
+    set_vault_directory(path.get_base_dir())
+    
 func set_vault_directory(dir: String) -> void:
-	verse_dir = dir
-	library_location_label.text = dir
+    verse_dir = dir
+    library_location_label.text = dir
