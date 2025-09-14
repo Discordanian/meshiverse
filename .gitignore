@@ -15,3 +15,5 @@ godot/.mono/
 godot/data_*/
 godot/mono_crash.*.json
 
+# Dumb mac files
+**/.DS_Store
