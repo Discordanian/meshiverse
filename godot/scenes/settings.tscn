@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cclyfheec18gf"]
+[gd_scene load_steps=5 format=3 uid="uid://cclyfheec18gf"]
 
 [ext_resource type="Texture2D" uid="uid://bikyfrpam6krp" path="res://assets/Images/MeshiverseBackground.png" id="1_5p8wc"]
+[ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="1_6wm04"]
 [ext_resource type="Script" uid="uid://boc1kao7dicvm" path="res://scripts/settings.gd" id="1_r6d6q"]
 
 [sub_resource type="SystemFont" id="SystemFont_5p8wc"]
@@ -13,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_6wm04")
 script = ExtResource("1_r6d6q")
 
 [node name="SettingWallpaper" type="TextureRect" parent="."]
@@ -33,10 +35,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
 
 [node name="OpenSelector" type="FileDialog" parent="MarginContainer"]
 oversampling_override = 1.0
@@ -66,7 +64,6 @@ use_native_dialog = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 15
 
 [node name="Seperator" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -100,10 +97,21 @@ size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 24
 text = "Open Library"
 
+[node name="Seperator3" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Seperator5" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Seperator4" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Seperator6" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="DisplayDirectory" type="LineEdit" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
 placeholder_text = "Meshiverse Directory Location"
 editable = false
 
