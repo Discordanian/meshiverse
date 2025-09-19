@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://7xpsl7t7f5ey"]
+
+[ext_resource type="Script" uid="uid://8hn5218c2ag0" path="res://scripts/model_record.gd" id="1_4eao0"]
+[ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="1_36m3c"]
+
+[node name="ModelRecord" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_36m3c")
+script = ExtResource("1_4eao0")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="EditButton" type="Button" parent="PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+text = "Edit"
+
+[node name="AddedDateLabel" type="Label" parent="PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+
+[node name="ModelName" type="Label" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
