@@ -9,5 +9,5 @@ class_name ModelObject
     
 
 func iso_date_added() -> void:
-    return Time.get_date_string_from_unix_time(added_date)
+    return Time.get_date_string_from_unix_time(added_date_epoch)
     
