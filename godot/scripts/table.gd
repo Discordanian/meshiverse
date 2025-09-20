@@ -17,7 +17,7 @@ func Render() -> void:
     
     
     var header_row = TableRow.instantiate()
-    $Rows.add_child(header_row) 
+    $ScrollContainer/Rows.add_child(header_row) 
     
     for col in data.columns:
         var cell = TableHeader.instantiate()
@@ -29,7 +29,7 @@ func Render() -> void:
     for r in range(row_count):
         var row = TableRow.instantiate()
         print("Adding Row to table")
-        $Rows.add_child(row)
+        $ScrollContainer/Rows.add_child(row)
         
         for value in data.GetRow(r):
             var cell = TableCell.instantiate()
