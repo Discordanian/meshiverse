@@ -14,7 +14,8 @@ func get_datetime_from_epoch(epoch_timestamp: int) -> Dictionary:
     
 
 func _ready() -> void:
-    model_name_label.text = "model_name"
-    var date_string: String = Time.get_date_string_from_unix_time(added_date)
-    added_date_label.text = date_string
+    pass
+    # model_name_label.text = "model_name"
+    # var date_string: String = Time.get_date_string_from_unix_time(added_date)
+    # added_date_label.text = date_string
     
