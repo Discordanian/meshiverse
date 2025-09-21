@@ -9,9 +9,6 @@ var verse_dir: String = "Select Directory"
 func _ready() -> void:
     library_location_label.text = verse_dir
     $MarginContainer/OpenSelector.add_filter("meshiverse.cfg","Meshiverse settings file")
-    var df = DataFrame.New([[1,"First Model", "1970"]], ["Id","Name","Year"])
-    print(df)
-    print(df.GetRow(0))
 
 
 func _on_select_directory_button_down() -> void:
