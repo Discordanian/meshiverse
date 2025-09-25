@@ -26,9 +26,9 @@ func _to_string() -> String:
         return "<empty>"
     
     var retval: String = " | ".join(columns) + "\n"
-    for row in data:
+    for row: Array in data:
         var row_strings: PackedStringArray = []
-        for cell in row:
+        for cell: Variant in row:
             row_strings.append(str(cell))
         retval += " | ".join(row_strings) + "\n"
     
