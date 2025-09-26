@@ -1,5 +1,7 @@
 extends Control
 
+@onready var table: Node = $MainMargin/VBoxContainer/HBoxContainer/Table
+
 func _mock_data(n: int) -> Array[Array]:
     var data: Array[Array] = []
     for i in range(n):
@@ -15,5 +17,5 @@ func _ready() -> void:
     var columns : PackedStringArray = ["Id","Name","Year"]
     var data: Array[Array] = _mock_data(200)
     var df : DataFrame = DataFrame.New(data, columns)
-    $MainMargin/VBoxContainer/PanelContainer/Table.data = df
-    $MainMargin/VBoxContainer/PanelContainer/Table.Render()
+    table.data = df
+    table.Render()
