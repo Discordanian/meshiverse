@@ -18,13 +18,13 @@ func Render() -> void:
     $VBoxContainer.add_child(header_row)
     $VBoxContainer.move_child(header_row, 0) # Make the header the first thing.
     
-    for col in data.columns:
+    for col: Variant in data.columns:
         var cell: Node = TableHeader.instantiate()
         # print("Adding header Cell %s" % col)
         cell.text = col
         header_row.add_child(cell)
          
-    for r in range(row_count):
+    for r: int in range(row_count):
         var row: Node = TableRow.instantiate()
         # print("Adding Row to table")
         $VBoxContainer/ScrollContainer/Rows.add_child(row)

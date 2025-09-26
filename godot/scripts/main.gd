@@ -4,7 +4,7 @@ extends Control
 
 func _mock_data(n: int) -> Array[Array]:
     var data: Array[Array] = []
-    for i in range(n):
+    for i: int in range(n):
         var model_name: String = "Model %d / %d" % [i,n]
         data.append([i, model_name, 1950+i])
     return data

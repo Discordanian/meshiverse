@@ -4,8 +4,8 @@ extends Node
 var global_config: ConfigFile = ConfigFile.new()
 var vault_config: ConfigFile = ConfigFile.new()
 
-const APP_VERSION = "application/config/version"
-const GLOBAL_CONFIG_PATH = "user://settings.cfg"
+const APP_VERSION: String = "application/config/version"
+const GLOBAL_CONFIG_PATH: String = "user://settings.cfg"
 
 func _ready() -> void:
     if !FileAccess.file_exists(GLOBAL_CONFIG_PATH):
@@ -39,6 +39,6 @@ func new_vault_dir(dir: String) -> void:
 
 func print_config(config: ConfigFile) -> void:
     print("Printing Configuration File Contents")
-    for section in config.get_sections():
-        for key in config.get_section_keys(section):
+    for section: String in config.get_sections():
+        for key: String in config.get_section_keys(section):
             print("\t[%s] %s = %s" % [section, key, config.get_value(section,key,"None")])
