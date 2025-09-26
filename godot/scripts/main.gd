@@ -15,5 +15,5 @@ func _ready() -> void:
     var columns : PackedStringArray = ["Id","Name","Year"]
     var data: Array[Array] = _mock_data(200)
     var df : DataFrame = DataFrame.New(data, columns)
-    $MainMargin/PanelContainer/Table.data = df
-    $MainMargin/PanelContainer/Table.Render()
+    $MainMargin/VBoxContainer/PanelContainer/Table.data = df
+    $MainMargin/VBoxContainer/PanelContainer/Table.Render()
