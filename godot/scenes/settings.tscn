@@ -41,7 +41,7 @@ grow_vertical = 2
 [node name="OpenSelector" type="FileDialog" parent="MarginContainer"]
 oversampling_override = 1.0
 title = "Open a File"
-position = Vector2i(0, 36)
+size = Vector2i(968, 360)
 dialog_hide_on_ok = true
 file_mode = 0
 display_mode = 1
@@ -53,8 +53,7 @@ folder_creation_enabled = false
 [node name="NewSelector" type="FileDialog" parent="MarginContainer"]
 oversampling_override = 1.0
 title = "Open a Directory"
-initial_position = 2
-size = Vector2i(640, 640)
+size = Vector2i(1020, 360)
 ok_button_text = "Select"
 dialog_hide_on_ok = true
 file_mode = 2
