@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://bboka6sr3xp5n"]
+[gd_scene load_steps=2 format=3 uid="uid://bboka6sr3xp5n"]
+
+[ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="1_xbcnq"]
 
 [node name="InfoBox" type="Control"]
 layout_mode = 3
@@ -8,6 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+theme = ExtResource("1_xbcnq")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

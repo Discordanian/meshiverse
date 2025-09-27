@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddqenfvhqshju"]
+[gd_scene load_steps=6 format=3 uid="uid://ddqenfvhqshju"]
 
 [ext_resource type="Script" uid="uid://d0ya4rgtrrrna" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dhtrdbn6p3im1" path="res://scenes/table.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://3psfqhfd2p8" path="res://scenes/menu_bar.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://bboka6sr3xp5n" path="res://scenes/infobox.tscn" id="4_jyhfs"]
+[ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="4_tbgi4"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -40,6 +41,7 @@ theme_override_constants/separation = 4
 [node name="Table" parent="MainMargin/VBoxContainer/HBoxContainer" instance=ExtResource("1_o5qli")]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_tbgi4")
 
 [node name="InfoBox" parent="MainMargin/VBoxContainer/HBoxContainer" instance=ExtResource("4_jyhfs")]
 custom_minimum_size = Vector2(200, 0)

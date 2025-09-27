@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhtrdbn6p3im1"]
+[gd_scene load_steps=3 format=3 uid="uid://dhtrdbn6p3im1"]
 
 [ext_resource type="Script" uid="uid://crjx8l3ylwk0q" path="res://scripts/table.gd" id="1_02ppr"]
+[ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="2_eotx8"]
 
 [node name="Table" type="Control"]
 layout_mode = 3
@@ -18,10 +19,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("2_eotx8")
 
 [node name="Rows" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2

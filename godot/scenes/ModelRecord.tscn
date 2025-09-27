@@ -1,7 +1,30 @@
 [gd_scene load_steps=3 format=3 uid="uid://7xpsl7t7f5ey"]
 
-[ext_resource type="Script" uid="uid://8hn5218c2ag0" path="res://scripts/model_record.gd" id="1_4eao0"]
 [ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="1_36m3c"]
+
+[sub_resource type="GDScript" id="GDScript_4eao0"]
+script/source = "extends Control
+class_name ModelRecord
+
+@onready var model_name_label: Label = $PanelContainer/HBoxContainer/ModelName
+@onready var added_date_label: Label = $PanelContainer/HBoxContainer/AddedDateLabel
+@onready var edit_button: Button = $PanelContainer/HBoxContainer/EditButton
+
+var model_id: int = 0
+var model_name: String = \"Model Name\"
+var added_date: int = 12345678
+
+func get_datetime_from_epoch(epoch_timestamp: int) -> Dictionary:
+    return Time.get_datetime_dict_from_unix_time(epoch_timestamp)
+    
+
+func _ready() -> void:
+    pass
+    # model_name_label.text = \"model_name\"
+    # var date_string: String = Time.get_date_string_from_unix_time(added_date)
+    # added_date_label.text = date_string
+    
+"
 
 [node name="ModelRecord" type="Control"]
 layout_mode = 3
@@ -12,7 +35,7 @@ grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
 theme = ExtResource("1_36m3c")
-script = ExtResource("1_4eao0")
+script = SubResource("GDScript_4eao0")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1

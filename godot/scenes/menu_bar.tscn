@@ -1,27 +1,49 @@
-[gd_scene format=3 uid="uid://3psfqhfd2p8"]
+[gd_scene load_steps=6 format=3 uid="uid://3psfqhfd2p8"]
+
+[ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="1_3ciy2"]
+[ext_resource type="Texture2D" uid="uid://h7ljjqaaaohb" path="res://assets/Images/Meshiverse_Settings.png" id="2_wjle8"]
+[ext_resource type="Texture2D" uid="uid://dtt16ol2uv0gr" path="res://assets/Images/Meshiverse_Edit.png" id="3_npew6"]
+[ext_resource type="Texture2D" uid="uid://dkl36ljgiss0d" path="res://assets/Images/Meshiverse_Add.png" id="4_055gy"]
+[ext_resource type="Texture2D" uid="uid://gss6aq4cme3j" path="res://assets/Images/Meshiverse_Delete.png" id="5_7j175"]
 
 [node name="MenuBar" type="HBoxContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
-size_flags_horizontal = 3
+offset_right = 2353.0
+offset_bottom = 520.0
+theme = ExtResource("1_3ciy2")
 theme_override_constants/separation = 4
 
-[node name="FileButton" type="Button" parent="."]
+[node name="SettingsButton" type="Button" parent="."]
 layout_mode = 2
-text = "File"
+size_flags_horizontal = 3
+text = "Settings"
+icon = ExtResource("2_wjle8")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
-[node name="FileButton2" type="Button" parent="."]
+[node name="EditButton" type="Button" parent="."]
 layout_mode = 2
-text = "Add"
-
-[node name="FileButton3" type="Button" parent="."]
-layout_mode = 2
+size_flags_horizontal = 3
 text = "Edit"
+icon = ExtResource("3_npew6")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
-[node name="FileButton4" type="Button" parent="."]
+[node name="AddButton" type="Button" parent="."]
 layout_mode = 2
-text = "Menu 4"
+size_flags_horizontal = 3
+text = "Add"
+icon = ExtResource("4_055gy")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
-[node name="FileButton5" type="Button" parent="."]
+[node name="DeleteButton" type="Button" parent="."]
 layout_mode = 2
-text = "Menu 5"
+size_flags_horizontal = 3
+text = "Delete"
+icon = ExtResource("5_7j175")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
