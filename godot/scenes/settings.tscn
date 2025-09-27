@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cclyfheec18gf"]
+[gd_scene load_steps=7 format=3 uid="uid://cclyfheec18gf"]
 
 [ext_resource type="Texture2D" uid="uid://bikyfrpam6krp" path="res://assets/Images/MeshiverseBackground.png" id="1_5p8wc"]
 [ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="1_6wm04"]
 [ext_resource type="Script" uid="uid://boc1kao7dicvm" path="res://scripts/settings.gd" id="1_r6d6q"]
+[ext_resource type="Texture2D" uid="uid://cyekv5ms2qvcv" path="res://assets/Images/Meshiverse_CreateDirectory.png" id="4_es4n0"]
+[ext_resource type="Texture2D" uid="uid://dn0as2f4t401" path="res://assets/Images/Meshiverse_OpenDirectory.png" id="5_gis3k"]
 
 [sub_resource type="SystemFont" id="SystemFont_5p8wc"]
 font_names = PackedStringArray("Verdana")
@@ -85,13 +87,21 @@ theme_override_constants/separation = 40
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 24
-text = "New Library"
+text = "Create New Library"
+icon = ExtResource("4_es4n0")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="Open" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 24
-text = "Open Library"
+text = "Open Existing Library"
+icon = ExtResource("5_gis3k")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="DisplayDirectory" type="LineEdit" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
