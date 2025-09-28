@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://d0ya4rgtrrrna" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dhtrdbn6p3im1" path="res://scenes/table.tscn" id="1_o5qli"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://themes/soft_retro/soft_retro.tres" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://3psfqhfd2p8" path="res://scenes/menu_bar.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://bboka6sr3xp5n" path="res://scenes/infobox.tscn" id="4_jyhfs"]
-[ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="4_tbgi4"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -13,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_tefeu")
 script = ExtResource("1_0wfyh")
 
 [node name="MainMargin" type="MarginContainer" parent="."]
@@ -32,6 +33,7 @@ layout_mode = 2
 
 [node name="MenuBar" parent="MainMargin/VBoxContainer" instance=ExtResource("2_sugp2")]
 layout_mode = 2
+theme = ExtResource("1_tefeu")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainMargin/VBoxContainer"]
 layout_mode = 2
@@ -41,8 +43,9 @@ theme_override_constants/separation = 8
 [node name="InfoBox" parent="MainMargin/VBoxContainer/HBoxContainer" instance=ExtResource("4_jyhfs")]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
+theme = ExtResource("1_tefeu")
 
 [node name="Table" parent="MainMargin/VBoxContainer/HBoxContainer" instance=ExtResource("1_o5qli")]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("4_tbgi4")
+theme = ExtResource("1_tefeu")
