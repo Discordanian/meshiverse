@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bboka6sr3xp5n"]
+[gd_scene load_steps=3 format=3 uid="uid://bboka6sr3xp5n"]
 
 [ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="1_xbcnq"]
+[ext_resource type="Script" uid="uid://dhuup88oe20ns" path="res://scripts/infobox.gd" id="2_1too7"]
 
 [node name="InfoBox" type="Control"]
 layout_mode = 3
@@ -11,6 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_xbcnq")
+script = ExtResource("2_1too7")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -20,29 +22,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Name of Model"
 
-[node name="Label2" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Tree" type="Tree" parent="MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
-text = "File Location"
-
-[node name="Label3" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Version"
-
-[node name="Label4" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Readme"
-
-[node name="Label5" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Something Else"
