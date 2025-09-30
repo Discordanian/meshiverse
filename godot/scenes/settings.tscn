@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cclyfheec18gf"]
+[gd_scene load_steps=6 format=3 uid="uid://cclyfheec18gf"]
 
 [ext_resource type="Texture2D" uid="uid://bikyfrpam6krp" path="res://assets/Images/MeshiverseBackground.png" id="1_5p8wc"]
-[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://themes/soft_retro/soft_retro.tres" id="1_es4n0"]
 [ext_resource type="Script" uid="uid://boc1kao7dicvm" path="res://scripts/settings.gd" id="1_r6d6q"]
 [ext_resource type="Texture2D" uid="uid://cyekv5ms2qvcv" path="res://assets/Images/Meshiverse_CreateDirectory.png" id="4_es4n0"]
 [ext_resource type="Texture2D" uid="uid://dn0as2f4t401" path="res://assets/Images/Meshiverse_OpenDirectory.png" id="5_gis3k"]
@@ -16,7 +15,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_es4n0")
 script = ExtResource("1_r6d6q")
 
 [node name="SettingWallpaper" type="TextureRect" parent="."]
@@ -101,6 +99,15 @@ icon = ExtResource("5_gis3k")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
+
+[node name="MenuButton" type="MenuButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Select Theme"
+item_count = 2
+popup/item_0/text = "Choice 1"
+popup/item_0/id = 0
+popup/item_1/text = "Choice 2"
+popup/item_1/id = 1
 
 [node name="DisplayDirectory" type="LineEdit" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
