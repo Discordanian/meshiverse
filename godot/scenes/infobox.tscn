@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://bboka6sr3xp5n"]
+[gd_scene load_steps=2 format=3 uid="uid://bboka6sr3xp5n"]
 
-[ext_resource type="Theme" uid="uid://4xxu83ohm4g" path="res://themes/primary.tres" id="1_xbcnq"]
 [ext_resource type="Script" uid="uid://dhuup88oe20ns" path="res://scripts/infobox.gd" id="2_1too7"]
 
 [node name="InfoBox" type="Control"]
@@ -11,7 +10,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
-theme = ExtResource("1_xbcnq")
 script = ExtResource("2_1too7")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
