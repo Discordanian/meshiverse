@@ -1,7 +1,8 @@
 extends Control
 
 @onready var table: Node = $MainMargin/VBoxContainer/HBoxContainer/Table
-@onready var menu_bar: Node = $MainMargin/VBoxContainer/MenuBar
+@onready var menu_bar: MeshMenuBar = $MainMargin/VBoxContainer/MenuBar
+
 
 func _mock_data(n: int) -> Array[Array]:
 	var data: Array[Array] = []
