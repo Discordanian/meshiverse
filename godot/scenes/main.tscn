@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddqenfvhqshju"]
+[gd_scene load_steps=7 format=3 uid="uid://ddqenfvhqshju"]
 
 [ext_resource type="Script" uid="uid://d0ya4rgtrrrna" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dhtrdbn6p3im1" path="res://scenes/table.tscn" id="1_o5qli"]
+[ext_resource type="Theme" uid="uid://b72dcy8vcohwd" path="res://themes/solar_dark.tres" id="1_o6xl0"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://themes/soft_retro/soft_retro.tres" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://3psfqhfd2p8" path="res://scenes/menu_bar.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://bboka6sr3xp5n" path="res://scenes/infobox.tscn" id="4_jyhfs"]
@@ -13,7 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_tefeu")
+theme = ExtResource("1_o6xl0")
 script = ExtResource("1_0wfyh")
 
 [node name="MainMargin" type="MarginContainer" parent="."]
