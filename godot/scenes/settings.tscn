@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cclyfheec18gf"]
 
-[ext_resource type="Texture2D" uid="uid://bikyfrpam6krp" path="res://assets/Images/MeshiverseBackground.png" id="1_5p8wc"]
 [ext_resource type="Script" uid="uid://boc1kao7dicvm" path="res://scripts/settings.gd" id="1_r6d6q"]
+[ext_resource type="Texture2D" uid="uid://btwn2qd6hr4eh" path="res://assets/Images/Tangential_Cold_Paper_Mockup.jpg" id="2_es4n0"]
 [ext_resource type="Texture2D" uid="uid://cyekv5ms2qvcv" path="res://assets/Images/Meshiverse_CreateDirectory.png" id="4_es4n0"]
 [ext_resource type="Texture2D" uid="uid://c6fg7kv2rta2f" path="res://assets/Images/Meshiverse_Return.png" id="5_es4n0"]
 [ext_resource type="Texture2D" uid="uid://dn0as2f4t401" path="res://assets/Images/Meshiverse_OpenDirectory.png" id="5_gis3k"]
@@ -26,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_5p8wc")
+texture = ExtResource("2_es4n0")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

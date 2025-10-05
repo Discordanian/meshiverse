@@ -28,6 +28,7 @@ func _on_select_directory_button_down() -> void:
 
 func _on_directory_selector_dir_selected(dir: String) -> void:
     set_vault_directory(dir)
+    emit_signal("new_directory")
 
 
 func _on_open_button_down() -> void:
@@ -36,6 +37,7 @@ func _on_open_button_down() -> void:
 
 func _on_open_selector_file_selected(path: String) -> void:
     set_vault_directory(path.get_base_dir())
+    emit_signal("open_directory")
     
 func set_vault_directory(dir: String) -> void:
     verse_dir = dir
