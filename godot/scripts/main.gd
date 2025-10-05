@@ -9,8 +9,7 @@ enum VisibleScreen { SETTINGS, LIBRARY, DETAILS }
 @onready var settings_node: Node = $MainMargin/Settings
 
 var visible_screen: VisibleScreen = VisibleScreen.LIBRARY
-
-               
+         
 
 func _mock_data(n: int) -> Array[Array]:
     var data: Array[Array] = []
@@ -23,12 +22,23 @@ func setup_theme() -> void:
     var tm: MeshiverseThemeManager = MeshiverseThemeManager.new()
     var local_theme: Theme = $".".theme
     $".".theme = tm.update_theme(local_theme)
-    
+ 
+func _handle_menu_bar_signals(button_name: String) -> void:
+    print("handle_menu_bar_signals(%s)" % button_name)
+    match button_name:
+        "SETTINGS":
+            visible_screen = VisibleScreen.SETTINGS
+        _ :
+            pass
+    _visibility()       
     
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     print("main _ready()")
     ConfigFileHandler.print_config(ConfigFileHandler.global_config)
+    
+    if menu_bar:
+        menu_bar.menu_button_pressed.connect(_handle_menu_bar_signals)
     
     var columns : PackedStringArray = ["Id","Name","Year"]
     var data: Array[Array] = _mock_data(200)
