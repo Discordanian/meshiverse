@@ -4,8 +4,12 @@ extends Node
 var global_config: ConfigFile = ConfigFile.new()
 var vault_config: ConfigFile = ConfigFile.new()
 
+
+
 const APP_VERSION: String = "application/config/version"
 const GLOBAL_CONFIG_PATH: String = "user://settings.cfg"
+
+
 
 func _ready() -> void:
     if !FileAccess.file_exists(GLOBAL_CONFIG_PATH):
@@ -20,6 +24,7 @@ func _ready() -> void:
         else:
             print("Configuration loaded")
     print_config(global_config)
+
 
 func set_vault_dir(dir: String) -> void:
     global_config.set_value("vault","path", dir)
