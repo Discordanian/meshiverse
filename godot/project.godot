@@ -16,7 +16,7 @@ config/version="0.1.0"
 run/main_scene="res://scenes/settings.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 run/low_processor_mode=true
-config/icon="res://icon.svg"
+config/icon="uid://cdydkfrovytiq"
 
 [autoload]
 

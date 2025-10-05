@@ -74,7 +74,7 @@ func populate_tree_from_dictionary(dict: Dictionary, parent_item: TreeItem = nul
         
         # Set the key as the first column
         item.set_text(0, str(key))
-        print("key ", key)
+        # print("key ", key)
         
         # Handle different value types
         match typeof(value):
