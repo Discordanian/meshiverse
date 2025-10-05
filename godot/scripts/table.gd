@@ -33,3 +33,17 @@ func Render() -> void:
             var cell: Node = TableCell.instantiate()
             cell.text = str(value)
             row.add_child(cell)
+
+# mock and _mock_data are for testing
+func mock(rows: int) -> void:
+    var columns : PackedStringArray = ["Id","Name","Year"]
+    var mock_data: Array[Array] = _mock_data(rows)
+    var df : DataFrame = DataFrame.New(mock_data, columns)
+    data = df
+
+func _mock_data(n: int) -> Array[Array]:
+    var mock_data: Array[Array] = []
+    for i: int in range(n):
+        var model_name: String = "Model %d / %d" % [i,n]
+        mock_data.append([i, model_name, 1950+i])
+    return mock_data

@@ -9,14 +9,6 @@ enum VisibleScreen { SETTINGS, LIBRARY, DETAILS }
 @onready var settings_node: Node = $MainMargin/Settings
 
 var visible_screen: VisibleScreen = VisibleScreen.LIBRARY
-         
-
-func _mock_data(n: int) -> Array[Array]:
-    var data: Array[Array] = []
-    for i: int in range(n):
-        var model_name: String = "Model %d / %d" % [i,n]
-        data.append([i, model_name, 1950+i])
-    return data
 
 func setup_theme() -> void:
     var tm: MeshiverseThemeManager = MeshiverseThemeManager.new()
@@ -40,17 +32,10 @@ func _ready() -> void:
     if menu_bar:
         menu_bar.menu_button_pressed.connect(_handle_menu_bar_signals)
     
-    var columns : PackedStringArray = ["Id","Name","Year"]
-    var data: Array[Array] = _mock_data(200)
-    var df : DataFrame = DataFrame.New(data, columns)
-    table.data = df
+    # Mock table
+    table.mock(123)
     table.Render()
-    
-    var dpi: int = DisplayServer.screen_get_dpi()
-    print("DPI returned is : ", dpi)
-    # var font_size: int = get_scaled_font_size(12)
-    # print("Returned font size:", font_size)
-    # print(visible_screen)
+
     setup_theme()
     _visibility()
 
