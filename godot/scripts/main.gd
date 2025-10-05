@@ -6,7 +6,7 @@ enum VisibleScreen { SETTINGS, LIBRARY, DETAILS }
 @onready var menu_bar: MeshMenuBar = $MainMargin/MainVbox/MenuBar
 
 @onready var primary_node: Node = $MainMargin/MainVbox
-@onready var settings_node: Node = $MainMargin/Settings
+@onready var settings_node: MeshSettings = $MainMargin/Settings
 
 var visible_screen: VisibleScreen = VisibleScreen.LIBRARY
 
@@ -20,9 +20,14 @@ func _handle_menu_bar_signals(button_name: String) -> void:
     match button_name:
         "SETTINGS":
             visible_screen = VisibleScreen.SETTINGS
+        "LIBRARY":
+            visible_screen = VisibleScreen.LIBRARY
         _ :
             pass
     _visibility()       
+
+func _show_main() -> void:
+    _handle_menu_bar_signals("LIBRARY")
     
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,6 +36,9 @@ func _ready() -> void:
     
     if menu_bar:
         menu_bar.menu_button_pressed.connect(_handle_menu_bar_signals)
+    
+    if settings_node:
+        settings_node.return_to_main.connect(_show_main)
     
     # Mock table
     table.mock(123)

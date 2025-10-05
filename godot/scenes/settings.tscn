@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cclyfheec18gf"]
+[gd_scene load_steps=7 format=3 uid="uid://cclyfheec18gf"]
 
 [ext_resource type="Texture2D" uid="uid://bikyfrpam6krp" path="res://assets/Images/MeshiverseBackground.png" id="1_5p8wc"]
 [ext_resource type="Script" uid="uid://boc1kao7dicvm" path="res://scripts/settings.gd" id="1_r6d6q"]
 [ext_resource type="Texture2D" uid="uid://cyekv5ms2qvcv" path="res://assets/Images/Meshiverse_CreateDirectory.png" id="4_es4n0"]
+[ext_resource type="Texture2D" uid="uid://c6fg7kv2rta2f" path="res://assets/Images/Meshiverse_Return.png" id="5_es4n0"]
 [ext_resource type="Texture2D" uid="uid://dn0as2f4t401" path="res://assets/Images/Meshiverse_OpenDirectory.png" id="5_gis3k"]
 
 [sub_resource type="SystemFont" id="SystemFont_5p8wc"]
@@ -83,7 +84,7 @@ theme_override_constants/separation = 40
 [node name="New" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 24
+tooltip_text = "Create New Library"
 text = "Create New Library"
 icon = ExtResource("4_es4n0")
 icon_alignment = 1
@@ -93,14 +94,14 @@ expand_icon = true
 [node name="Open" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_font_sizes/font_size = 24
+tooltip_text = "Open Existing Library"
 text = "Open Existing Library"
 icon = ExtResource("5_gis3k")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="MenuButton" type="MenuButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="ThemeSelect" type="MenuButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Select Theme"
 item_count = 2
@@ -114,6 +115,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Meshiverse Directory Location"
 editable = false
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Main" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+tooltip_text = "Return to Main"
+text = "Return to Main"
+icon = ExtResource("5_es4n0")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [connection signal="file_selected" from="MarginContainer/OpenSelector" to="." method="_on_open_selector_file_selected"]
 [connection signal="dir_selected" from="MarginContainer/NewSelector" to="." method="_on_directory_selector_dir_selected"]
