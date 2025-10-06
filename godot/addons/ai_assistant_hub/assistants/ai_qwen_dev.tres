@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="AIAssistantResource" load_steps=6 format=3 uid="uid://iminfec71ycc"]
+
+[ext_resource type="Resource" uid="uid://c0xq2vafep0gu" path="res://addons/ai_assistant_hub/llm_providers/ollama.tres" id="1_b1d7l"]
+[ext_resource type="Script" uid="uid://bt0vift84v5uh" path="res://addons/ai_assistant_hub/quick_prompts/ai_quick_prompt_resource.gd" id="2_lio40"]
+[ext_resource type="Script" uid="uid://bxfuxu1q2rt2f" path="res://addons/ai_assistant_hub/assistants/ai_assistant_resource.gd" id="3_7ycy4"]
+
+[sub_resource type="Resource" id="Resource_b1d7l"]
+script = ExtResource("2_lio40")
+action_name = "Describe This"
+action_prompt = "What does this code do?  Explain it to me like I'm new to Godot.
+```gdscript
+{CODE}
+```"
+metadata/_custom_type_script = "uid://bt0vift84v5uh"
+
+[sub_resource type="Resource" id="Resource_lio40"]
+script = ExtResource("2_lio40")
+action_name = "Critique This"
+action_prompt = "I want to keep in mind best practices including using explicit typed variables.  What suggestions do you have for the following code?
+```gdscript
+{CODE}
+```"
+metadata/_custom_type_script = "uid://bt0vift84v5uh"
+
+[resource]
+script = ExtResource("3_7ycy4")
+type_name = "Qwen Dev"
+ai_model = "qwen2.5-coder:32b"
+llm_provider = ExtResource("1_b1d7l")
+quick_prompts = Array[ExtResource("2_lio40")]([SubResource("Resource_b1d7l"), SubResource("Resource_lio40")])
