@@ -9,19 +9,19 @@ signal menu_button_pressed(menu_name: String)
 @onready var delete_button: Button = $DeleteButton
 
 func _ready() -> void:
-    settings_button.pressed.connect(_on_settings_pressed)
-    edit_button.pressed.connect(_on_edit_pressed)
-    add_button.pressed.connect(_on_add_pressed)
-    delete_button.pressed.connect(_on_delete_pressed)
-    
+	settings_button.pressed.connect(_on_settings_pressed)
+	edit_button.pressed.connect(_on_edit_pressed)
+	add_button.pressed.connect(_on_add_pressed)
+	delete_button.pressed.connect(_on_delete_pressed)
+	
 func _on_settings_pressed() -> void:
-    emit_signal("menu_button_pressed", "SETTINGS")
+	emit_signal("menu_button_pressed", "SETTINGS")
 
 func _on_edit_pressed() -> void:
-    emit_signal("menu_button_pressed", "EDIT")
-    
+	emit_signal("menu_button_pressed", "EDIT")
+	
 func _on_add_pressed() -> void:
-    emit_signal("menu_button_pressed", "ADD")
-    
+	emit_signal("menu_button_pressed", "ADD")
+	
 func _on_delete_pressed() -> void:
-    emit_signal("menu_button_pressed", "DELETE")
+	emit_signal("menu_button_pressed", "DELETE")
