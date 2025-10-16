@@ -41,12 +41,10 @@ size_flags_vertical = 3
 theme_override_constants/separation = 8
 
 [node name="InfoBox" parent="MainMargin/MainVbox/HBoxContainer" instance=ExtResource("4_jyhfs")]
-custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 
 [node name="Table" parent="MainMargin/MainVbox/HBoxContainer" instance=ExtResource("1_o5qli")]
 layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="Settings" parent="MainMargin" instance=ExtResource("7_o6xl0")]
 visible = false
