@@ -23,12 +23,15 @@ func get_ui_scale_factor() -> float:
     
     # Use DPI-based scale if it's greater than 1.0, otherwise use resolution-based scaling
     if scale_factor > 1.0:
+        print("Using DPI-based scale factor: ", scale_factor)
         return scale_factor
     
     if screen_size.x >= 3840: #4k display
+        print("Using 4k scale factor: 3.0")
         return 3.0
         
     if screen_size.x >= 2560:
+        print("Using 2.5k scale factor: 2.5")
         return 2.5
         
     return 1.0
