@@ -9,11 +9,19 @@ func get_scaled_font_size(base_size: int) -> int:
     
 func get_ui_scale_factor() -> float:
     var screen_size: Vector2 = DisplayServer.screen_get_size()
-    var scale_factor: float = DisplayServer.screen_get_max_scale()
+    var screen_index: int = DisplayServer.window_get_current_screen()
+    
+    # Calculate scale from DPI (96 DPI = 1.0 scale, 192 DPI = 2.0 scale, etc.)
+    var scale_factor: float = 1.0
+    var dpi: int = DisplayServer.screen_get_dpi(screen_index)
+    if dpi > 0:
+        scale_factor = float(dpi) / 96.0
     
     print("Screen size: ", screen_size)
-    print("Screen Scale Factor: ", scale_factor)
+    print("Screen DPI: ", dpi)
+    print("Calculated Scale Factor: ", scale_factor)
     
+    # Use DPI-based scale if it's greater than 1.0, otherwise use resolution-based scaling
     if scale_factor > 1.0:
         return scale_factor
     
