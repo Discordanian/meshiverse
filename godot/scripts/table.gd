@@ -17,6 +17,11 @@ signal row_selected(row_index: int, row_data: Array)
 var selected_row_index: int = -1
 var _row_nodes: Array[Node] = []  # Store references to row nodes for selection management
 
+# Sorting
+var _sorted_column: String = ""
+var _sort_descending: bool = false
+var _header_cells: Array[Control] = []  # Store references to header cells for sort indicators
+
 # Called when the node enters the scene tree for the first time.
 func Render() -> void:
     if not data:
@@ -30,7 +35,6 @@ func Render() -> void:
     
     # Store all cells for width calculation
     var header_row: Node = TableRow.instantiate()
-    var header_cells: Array[Control] = []
     var data_rows: Array[Node] = []
     var all_cells: Array[Array] = []  # [column_index][row_index] = cell
     
@@ -46,12 +50,18 @@ func Render() -> void:
     if header_row is HBoxContainer:
         (header_row as HBoxContainer).size_flags_horizontal = 0
     
+    _header_cells.clear()
     for col_idx: int in range(num_columns):
         var cell: Control = TableHeader.instantiate() as Control
-        cell.text = data.columns[col_idx]
+        var column_name: String = data.columns[col_idx]
+        cell.text = _get_header_text_with_sort_indicator(column_name)
         header_row.add_child(cell)
-        header_cells.append(cell)
+        _header_cells.append(cell)
         all_cells[col_idx].append(cell)
+        
+        # Connect button press signal for sorting
+        if cell is Button:
+            (cell as Button).pressed.connect(_on_header_clicked.bind(column_name))
     
     # Build data rows
     _row_nodes.clear()
@@ -91,6 +101,47 @@ func Render() -> void:
     
     # Apply widths to all cells
     _apply_column_widths(all_cells, column_widths)
+    
+    # Update header sort indicators
+    _update_header_sort_indicators()
+
+# Handle header click for sorting
+func _on_header_clicked(column_name: String) -> void:
+    # If clicking the same column, toggle sort direction
+    if _sorted_column == column_name:
+        _sort_descending = !_sort_descending
+    else:
+        # New column, sort ascending by default
+        _sorted_column = column_name
+        _sort_descending = false
+    
+    # Sort the data
+    if data:
+        data.SortBy(_sorted_column, _sort_descending)
+        
+        # Re-render the table with sorted data
+        Render()
+
+# Get header text with sort indicator
+func _get_header_text_with_sort_indicator(column_name: String) -> String:
+    if _sorted_column == column_name:
+        if _sort_descending:
+            return column_name + " ▼"  # Down arrow for descending
+        else:
+            return column_name + " ▲"  # Up arrow for ascending
+    return column_name
+
+# Update sort indicators on all headers
+func _update_header_sort_indicators() -> void:
+    if not data:
+        return
+    
+    for col_idx: int in range(_header_cells.size()):
+        if col_idx < data.columns.size():
+            var column_name: String = data.columns[col_idx]
+            var header: Control = _header_cells[col_idx]
+            if header:
+                header.text = _get_header_text_with_sort_indicator(column_name)
 
 # Calculate optimal width for each column based on content
 func _calculate_column_widths(all_cells: Array[Array]) -> Array[float]:
