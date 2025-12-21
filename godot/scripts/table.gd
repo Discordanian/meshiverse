@@ -12,6 +12,11 @@ extends Control
 var _enforced_column_widths: Array[float] = []
 var _all_table_cells: Array[Array] = []  # [column_index][row_index] = cell
 
+# Row selection
+signal row_selected(row_index: int, row_data: Array)
+var selected_row_index: int = -1
+var _row_nodes: Array[Node] = []  # Store references to row nodes for selection management
+
 # Called when the node enters the scene tree for the first time.
 func Render() -> void:
     if not data:
@@ -49,6 +54,7 @@ func Render() -> void:
         all_cells[col_idx].append(cell)
     
     # Build data rows
+    _row_nodes.clear()
     for r: int in range(row_count):
         var row: Node = TableRow.instantiate()
         # Ensure data rows don't expand to fill space
@@ -56,6 +62,14 @@ func Render() -> void:
             (row as HBoxContainer).size_flags_horizontal = 0
         $VBoxContainer/ScrollContainer/Rows.add_child(row)
         data_rows.append(row)
+        _row_nodes.append(row)
+        
+        # Set row index and connect to selection signal if it's a TableRow script
+        if row.has_method("set_row_index"):
+            row.set_row_index(r)
+        if row.has_signal("row_selected"):
+            # Connect directly - the row will emit its own index
+            row.row_selected.connect(_on_row_selected)
         
         var row_data: Array = data.GetRow(r)
         for col_idx: int in range(num_columns):
@@ -292,6 +306,33 @@ func _enforce_exact_column_widths(all_cells: Array[Array], column_widths: Array[
                 control.set_size(Vector2(width, control.size.y))
 
 
+# Handle row selection
+func _on_row_selected(row_index: int) -> void:
+    # Deselect previous row (if different from new selection)
+    if selected_row_index >= 0 and selected_row_index != row_index and selected_row_index < _row_nodes.size():
+        var prev_row: Node = _row_nodes[selected_row_index]
+        if prev_row.has_method("deselect"):
+            prev_row.deselect()
+    
+    # Update selected row index (row already selected itself)
+    selected_row_index = row_index
+    
+    # Emit signal with row data
+    if data and row_index < data.Size():
+        var row_data: Array = data.GetRow(row_index)
+        row_selected.emit(row_index, row_data)
+
+# Get the currently selected row index
+func get_selected_row_index() -> int:
+    return selected_row_index
+
+# Programmatically select a row by index
+func select_row(index: int) -> void:
+    if index >= 0 and index < _row_nodes.size():
+        var row: Node = _row_nodes[index]
+        if row.has_method("select"):
+            row.select()
+
 # Clear existing table rows
 func _clear_table() -> void:
     # Clear header row if it exists
@@ -311,6 +352,10 @@ func _clear_table() -> void:
     var rows_container: Node = $VBoxContainer/ScrollContainer/Rows
     for child: Node in rows_container.get_children():
         child.queue_free()
+    
+    # Reset selection state
+    selected_row_index = -1
+    _row_nodes.clear()
 
 # mock and _mock_data are for testing
 func mock(rows: int) -> void:
