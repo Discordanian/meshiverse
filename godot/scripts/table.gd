@@ -5,8 +5,12 @@ extends Control
 @onready var TableHeader: PackedScene = preload("res://scenes/table_header_cell.tscn")
 
 @export var data: DataFrame
-@export var max_column_width: float = 400.0  # Maximum width for a column in pixels
-@export var column_padding: float = 16.0  # Additional padding for column width
+@export var max_column_width: float = 400.0  # Maximum width for a column in pixels (base, will be scaled)
+@export var column_padding: float = 16.0  # Additional padding for column width (base, will be scaled)
+
+# Store calculated column widths to enforce them
+var _enforced_column_widths: Array[float] = []
+var _all_table_cells: Array[Array] = []  # [column_index][row_index] = cell
 
 # Called when the node enters the scene tree for the first time.
 func Render() -> void:
@@ -33,6 +37,10 @@ func Render() -> void:
     $VBoxContainer.add_child(header_row)
     $VBoxContainer.move_child(header_row, 0)
     
+    # Ensure header row doesn't expand to fill space
+    if header_row is HBoxContainer:
+        (header_row as HBoxContainer).size_flags_horizontal = 0
+    
     for col_idx: int in range(num_columns):
         var cell: Control = TableHeader.instantiate() as Control
         cell.text = data.columns[col_idx]
@@ -43,6 +51,9 @@ func Render() -> void:
     # Build data rows
     for r: int in range(row_count):
         var row: Node = TableRow.instantiate()
+        # Ensure data rows don't expand to fill space
+        if row is HBoxContainer:
+            (row as HBoxContainer).size_flags_horizontal = 0
         $VBoxContainer/ScrollContainer/Rows.add_child(row)
         data_rows.append(row)
         
@@ -60,6 +71,10 @@ func Render() -> void:
     # Calculate optimal column widths
     var column_widths: Array[float] = _calculate_column_widths(all_cells)
     
+    # Store for potential future enforcement
+    _enforced_column_widths = column_widths
+    _all_table_cells = all_cells
+    
     # Apply widths to all cells
     _apply_column_widths(all_cells, column_widths)
 
@@ -67,6 +82,9 @@ func Render() -> void:
 func _calculate_column_widths(all_cells: Array[Array]) -> Array[float]:
     var column_widths: Array[float] = []
     var num_columns: int = all_cells.size()
+    
+    # With content_scale_factor, fonts and sizes are already scaled uniformly
+    # No need to manually scale padding/max_width - they're in the same coordinate system
     
     for col_idx: int in range(num_columns):
         var max_width: float = 0.0
@@ -91,14 +109,21 @@ func _calculate_column_widths(all_cells: Array[Array]) -> Array[float]:
             # Get font from theme
             var font: Font = _get_font_for_control(control)
             if font:
+                # get_string_size() already accounts for the actual font size (which may be scaled)
+                # so the measurement is already in the correct pixel coordinate system
                 var text_size: Vector2 = font.get_string_size(text)
                 max_width = max(max_width, text_size.x)
             else:
                 # Fallback: estimate width (rough approximation)
-                max_width = max(max_width, text.length() * 8.0)
+                var cell_font_size: int = control.get_theme_font_size("font")
+                if cell_font_size <= 0:
+                    cell_font_size = 12  # Base font size
+                max_width = max(max_width, text.length() * cell_font_size * 0.6)  # Rough estimate
         
-        # Add padding and clamp to maximum
+        # Add padding (already in correct coordinate system with content_scale_factor)
         max_width += column_padding
+        
+        # Clamp to maximum width
         max_width = min(max_width, max_column_width)
         
         # Ensure minimum width
@@ -140,16 +165,132 @@ func _apply_column_widths(all_cells: Array[Array], column_widths: Array[float]) 
                 continue
             
             var control: Control = cell as Control
-            # Set minimum width to the calculated width (this becomes the desired width)
+            # Clear anchors that cause expansion - cells should use fixed width, not fill parent
+            # In HBoxContainer, anchors don't affect horizontal sizing, but we clear them to be safe
+            control.set_anchors_preset(Control.PRESET_TOP_LEFT, false)
+            control.anchor_right = 0.0
+            control.anchor_bottom = 0.0
+            control.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+            control.grow_vertical = Control.GROW_DIRECTION_BEGIN
+            
+            # Set minimum width - this ensures all cells in the same column have the same minimum
             control.custom_minimum_size.x = width
-            # Prevent expansion - use 0 to use natural/minimum size (left-aligned by default)
+            # Prevent expansion - SIZE_SHRINK_CENTER uses minimum size and centers, but we want left-aligned
+            # Actually, let's use 0 (no flags) which means use natural/minimum size
             control.size_flags_horizontal = 0
+            control.size_flags_vertical = Control.SIZE_SHRINK_CENTER
             
             # Enable text clipping for overflow
             if control is Label:
                 (control as Label).clip_contents = true
             elif control is Button:
                 (control as Button).clip_contents = true
+    
+    # Get separation value from the first row (should be same for all rows)
+    var row_separation: float = 3.0  # Default from table_row.tscn
+    if $VBoxContainer.get_child_count() > 0:
+        var first_row: Node = $VBoxContainer.get_child(0)
+        if first_row is HBoxContainer:
+            var hbox: HBoxContainer = first_row as HBoxContainer
+            # Try theme_override first (what's in the scene), then fallback to theme constant
+            if hbox.has_theme_constant_override("separation"):
+                row_separation = hbox.get_theme_constant("separation")
+            else:
+                row_separation = hbox.get_theme_constant("separation", "HBoxContainer")
+            if row_separation <= 0:
+                row_separation = 3.0
+    
+    # Calculate total table width including separations
+    var total_width: float = 0.0
+    for col_idx: int in range(num_columns):
+        total_width += column_widths[col_idx]
+        if col_idx < num_columns - 1:  # Add separation between columns, but not after last
+            total_width += row_separation
+    
+    # Ensure header row and data rows have consistent layout
+    # Get the header row (first child of VBoxContainer)
+    if $VBoxContainer.get_child_count() > 0:
+        var header_row: Node = $VBoxContainer.get_child(0)
+        if header_row is HBoxContainer:
+            var hbox: HBoxContainer = header_row as HBoxContainer
+            # Prevent the row from expanding - use shrink to use minimum size
+            hbox.size_flags_horizontal = 0
+            # Set minimum width to ensure consistent width with data rows
+            hbox.custom_minimum_size.x = total_width
+    
+    # Ensure all data rows have the same layout behavior
+    var rows_container: Node = $VBoxContainer/ScrollContainer/Rows
+    if rows_container is Control:
+        # Set minimum width on the rows container to match header width
+        (rows_container as Control).custom_minimum_size.x = total_width
+        (rows_container as Control).size_flags_horizontal = 0
+    
+    for row: Node in rows_container.get_children():
+        if row is HBoxContainer:
+            var hbox: HBoxContainer = row as HBoxContainer
+            # Prevent rows from expanding - match header row behavior
+            hbox.size_flags_horizontal = 0
+            # Set same minimum width to ensure alignment with header
+            hbox.custom_minimum_size.x = total_width
+    
+    # Force layout update to apply all changes
+    await get_tree().process_frame
+    
+    # Now explicitly set exact sizes on all cells to ensure perfect column alignment
+    # This overrides any space distribution by HBoxContainer
+    for col_idx: int in range(num_columns):
+        var width: float = column_widths[col_idx]
+        var column_cells: Array = all_cells[col_idx]
+        
+        for cell: Variant in column_cells:
+            if not cell is Control:
+                continue
+            
+            var control: Control = cell as Control
+            # Clear anchors again to ensure they don't interfere
+            control.set_anchors_preset(Control.PRESET_TOP_LEFT, false)
+            control.anchor_right = 0.0
+            control.anchor_bottom = 0.0
+            control.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+            # Force exact width - this ensures all cells in the column are identical
+            control.custom_minimum_size.x = width
+            # Use set_size instead of direct assignment for better compatibility
+            control.set_size(Vector2(width, control.size.y))
+            control.size_flags_horizontal = 0
+    
+    # Final layout pass to ensure all sizes are applied
+    await get_tree().process_frame
+    
+    # Use call_deferred to ensure sizes are set after all layout processing is complete
+    call_deferred("_enforce_exact_column_widths", all_cells, column_widths)
+
+# Enforce exact column widths - call this to ensure all cells match
+func _enforce_exact_column_widths(all_cells: Array[Array], column_widths: Array[float]) -> void:
+    var num_columns: int = column_widths.size()
+    
+    for col_idx: int in range(num_columns):
+        var width: float = column_widths[col_idx]
+        var column_cells: Array = all_cells[col_idx]
+        
+        for cell: Variant in column_cells:
+            if not cell is Control:
+                continue
+            
+            var control: Control = cell as Control
+            # Clear anchors to prevent expansion
+            control.set_anchors_preset(Control.PRESET_TOP_LEFT, false)
+            control.anchor_right = 0.0
+            control.anchor_bottom = 0.0
+            control.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+            # Force the exact size - ensure it matches the column width
+            control.custom_minimum_size.x = width
+            control.set_size(Vector2(width, control.size.y))
+            control.size_flags_horizontal = 0
+            
+            # Force the size again if it doesn't match (layout might have changed it)
+            if abs(control.size.x - width) > 0.1:  # Allow small floating point differences
+                control.set_size(Vector2(width, control.size.y))
+
 
 # Clear existing table rows
 func _clear_table() -> void:

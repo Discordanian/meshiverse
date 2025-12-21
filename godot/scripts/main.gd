@@ -11,9 +11,12 @@ enum VisibleScreen { SETTINGS, LIBRARY, DETAILS }
 var visible_screen: VisibleScreen = VisibleScreen.LIBRARY
 
 func setup_theme() -> void:
-    var tm: MeshiverseThemeManager = MeshiverseThemeManager.new()
-    var local_theme: Theme = $".".theme
-    $".".theme = tm.update_theme(local_theme)
+    # Apply UI scaling using content_scale_factor on the root Control
+    # This scales everything uniformly (fonts, sizes, spacing) without manual calculations
+    if has_node("/root/ThemeManager"):
+        var tm: Node = get_node("/root/ThemeManager")
+        if tm.has_method("apply_ui_scale"):
+            tm.apply_ui_scale(self)
  
 func _handle_menu_bar_signals(button_name: String) -> void:
     print("handle_menu_bar_signals(%s)" % button_name)
