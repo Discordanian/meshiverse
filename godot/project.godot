@@ -39,14 +39,14 @@ window/per_pixel_transparency/allowed=true
 window/warnings/inferred_declaration=0
 window/warnings/untyped_declaration=0
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/ai_assistant_hub/plugin.cfg", "res://addons/stl-io/plugin.cfg")
-
 [editing]
 
 text_editor/indent/type=1
 text_editor/indent/size=4
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ai_assistant_hub/plugin.cfg", "res://addons/stl-io/plugin.cfg")
 
 [plugins]
 

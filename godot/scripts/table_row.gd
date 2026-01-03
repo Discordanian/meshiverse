@@ -5,8 +5,14 @@ signal row_selected(row_index: int)
 var row_index: int = -1
 var is_selected: bool = false
 var background_rect: ColorRect = null
+var checkbox: CheckBox = null
 
 func _ready() -> void:
+	# Get the checkbox node
+	checkbox = $CheckBox
+	if checkbox:
+		checkbox.toggled.connect(_on_checkbox_toggled)
+	
 	# Create a ColorRect background for selection highlighting
 	background_rect = ColorRect.new()
 	background_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Let clicks pass through
@@ -22,16 +28,30 @@ func _ready() -> void:
 	# Make row clickable
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
+func _on_checkbox_toggled(button_pressed: bool) -> void:
+	if button_pressed:
+		select()
+	else:
+		deselect()
+
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mouse_event: InputEventMouseButton = event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
-			select()
+			# Toggle selection when clicking the row
+			if is_selected:
+				deselect()
+			else:
+				select()
 
 func select() -> void:
 	if not is_selected:
 		is_selected = true
 		_update_selection_style()
+		if checkbox:
+			checkbox.set_block_signals(true)
+			checkbox.button_pressed = true
+			checkbox.set_block_signals(false)
 		if row_index >= 0:
 			row_selected.emit(row_index)
 
@@ -39,6 +59,10 @@ func deselect() -> void:
 	if is_selected:
 		is_selected = false
 		_update_selection_style()
+		if checkbox:
+			checkbox.set_block_signals(true)
+			checkbox.button_pressed = false
+			checkbox.set_block_signals(false)
 
 func set_row_index(index: int) -> void:
 	row_index = index

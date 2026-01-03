@@ -11,3 +11,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 3
 script = ExtResource("1_table_row")
+
+[node name="CheckBox" type="CheckBox" parent="."]
+custom_minimum_size = Vector2(20, 0)
+size_flags_horizontal = 0
