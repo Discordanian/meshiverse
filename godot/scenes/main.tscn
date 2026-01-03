@@ -49,3 +49,5 @@ layout_mode = 2
 [node name="Settings" parent="MainMargin" instance=ExtResource("7_o6xl0")]
 visible = false
 layout_mode = 2
+
+[connection signal="row_selected" from="MainMargin/MainVbox/HBoxContainer/Table" to="." method="_on_table_row_selected"]

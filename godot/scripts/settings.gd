@@ -14,31 +14,31 @@ signal new_directory()
 
 # Read Global Config
 func _ready() -> void:
-    library_location_label.text = verse_dir
-    $MarginContainer/OpenSelector.add_filter("meshiverse.cfg","Meshiverse settings file")
-    return_button.pressed.connect(_on_return_pressed)
+	library_location_label.text = verse_dir
+	$MarginContainer/OpenSelector.add_filter("meshiverse.cfg","Meshiverse settings file")
+	return_button.pressed.connect(_on_return_pressed)
 
 func _on_return_pressed() -> void:
-    emit_signal("return_to_main")
+	emit_signal("return_to_main")
 
 
 func _on_select_directory_button_down() -> void:
-    new_dialog.popup()
+	new_dialog.popup()
 
 
 func _on_directory_selector_dir_selected(dir: String) -> void:
-    set_vault_directory(dir)
-    emit_signal("new_directory")
+	set_vault_directory(dir)
+	emit_signal("new_directory")
 
 
 func _on_open_button_down() -> void:
-    open_dialog.popup()
+	open_dialog.popup()
 
 
 func _on_open_selector_file_selected(path: String) -> void:
-    set_vault_directory(path.get_base_dir())
-    emit_signal("open_directory")
-    
+	set_vault_directory(path.get_base_dir())
+	emit_signal("open_directory")
+	
 func set_vault_directory(dir: String) -> void:
-    verse_dir = dir
-    library_location_label.text = dir
+	verse_dir = dir
+	library_location_label.text = dir

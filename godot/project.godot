@@ -43,6 +43,11 @@ window/warnings/untyped_declaration=0
 
 enabled=PackedStringArray("res://addons/ai_assistant_hub/plugin.cfg", "res://addons/stl-io/plugin.cfg")
 
+[editing]
+
+text_editor/indent/type=1
+text_editor/indent/size=4
+
 [plugins]
 
 ai_assistant_hub/llm_api="ollama_api"
