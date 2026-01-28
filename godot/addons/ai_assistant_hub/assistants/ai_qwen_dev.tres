@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AIAssistantResource" load_steps=6 format=3 uid="uid://iminfec71ycc"]
+[gd_resource type="Resource" script_class="AIAssistantResource" format=3 uid="uid://iminfec71ycc"]
 
 [ext_resource type="Resource" uid="uid://c0xq2vafep0gu" path="res://addons/ai_assistant_hub/llm_providers/ollama.tres" id="1_b1d7l"]
 [ext_resource type="Script" uid="uid://bt0vift84v5uh" path="res://addons/ai_assistant_hub/quick_prompts/ai_quick_prompt_resource.gd" id="2_lio40"]
