@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhtrdbn6p3im1"]
+[gd_scene format=3 uid="uid://dhtrdbn6p3im1"]
 
 [ext_resource type="Script" uid="uid://crjx8l3ylwk0q" path="res://scripts/table.gd" id="1_02ppr"]
 
-[node name="Table" type="Control"]
+[node name="Table" type="Control" unique_id=2095495981]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 script = ExtResource("1_02ppr")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2102474299]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,13 +22,13 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1553495929]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 2
 
-[node name="Rows" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="Rows" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=739086949]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0

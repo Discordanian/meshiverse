@@ -1,23 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://05ycvqeh5yvm"]
+[gd_scene format=3 uid="uid://05ycvqeh5yvm"]
 
 [ext_resource type="ArrayMesh" uid="uid://u2sxxj80dsvm" path="res://assets/mesh/Utah_teapot.stl" id="1_aybao"]
 
 [sub_resource type="Skin" id="Skin_aybao"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=441460330]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=661769968]
 
-[node name="UtahTeapot" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="UtahTeapot" type="MeshInstance3D" parent="StaticBody3D" unique_id=294072572]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0063774586, -1.1920929e-07, -0.003484249)
 rotation_order = 0
 mesh = ExtResource("1_aybao")
 skin = SubResource("Skin_aybao")
 skeleton = NodePath("../..")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=265297483]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1722889, 0, 150.25577)
 projection = 1
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=789906429]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 161.7725)

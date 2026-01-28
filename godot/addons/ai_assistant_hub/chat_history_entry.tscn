@@ -1,25 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1mpesm8gt63t"]
+[gd_scene format=3 uid="uid://b1mpesm8gt63t"]
 
-[ext_resource type="Script" path="res://addons/ai_assistant_hub/chat_history_entry.gd" id="1_rl68l"]
+[ext_resource type="Script" uid="uid://b3fi6crpvdt15" path="res://addons/ai_assistant_hub/chat_history_entry.gd" id="1_rl68l"]
 
-[node name="ChatHistoryEntry" type="HBoxContainer"]
+[node name="ChatHistoryEntry" type="HBoxContainer" unique_id=1434729475]
 auto_translate_mode = 1
 offset_right = 162.0
 offset_bottom = 24.0
 size_flags_horizontal = 3
 script = ExtResource("1_rl68l")
 
-[node name="RoleOptionList" type="OptionButton" parent="."]
+[node name="RoleOptionList" type="OptionButton" parent="." unique_id=1298114979]
 unique_name_in_owner = true
 auto_translate_mode = 1
 layout_mode = 2
 selected = 0
 item_count = 2
 popup/item_0/text = "user"
+popup/item_0/id = 0
 popup/item_1/text = "assistant"
 popup/item_1/id = 1
 
-[node name="ContentTxt" type="TextEdit" parent="."]
+[node name="ContentTxt" type="TextEdit" parent="." unique_id=2075722046]
 unique_name_in_owner = true
 auto_translate_mode = 1
 layout_mode = 2
@@ -28,7 +29,7 @@ wrap_mode = 1
 autowrap_mode = 2
 scroll_fit_content_height = true
 
-[node name="ForgetCheckBox" type="CheckBox" parent="."]
+[node name="ForgetCheckBox" type="CheckBox" parent="." unique_id=1980915183]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "This entry will be deleted on save."

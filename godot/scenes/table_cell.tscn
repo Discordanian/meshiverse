@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://o64lj4sddb5t"]
+[gd_scene format=3 uid="uid://o64lj4sddb5t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_071ee"]
 border_width_left = 1
@@ -6,7 +6,7 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 
-[node name="TableCell" type="Label"]
+[node name="TableCell" type="Label" unique_id=2037365958]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

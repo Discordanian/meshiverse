@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1pmscwpopnb2"]
+[gd_scene format=3 uid="uid://c1pmscwpopnb2"]
 
-[ext_resource type="Script" path="res://scripts/table_row.gd" id="1_table_row"]
+[ext_resource type="Script" uid="uid://cvmamreu4jcib" path="res://scripts/table_row.gd" id="1_table_row"]
 
-[node name="TableRow" type="HBoxContainer"]
+[node name="TableRow" type="HBoxContainer" unique_id=340634919]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,6 +12,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 3
 script = ExtResource("1_table_row")
 
-[node name="CheckBox" type="CheckBox" parent="."]
+[node name="CheckBox" type="CheckBox" parent="." unique_id=1165779904]
 custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
 size_flags_horizontal = 0
