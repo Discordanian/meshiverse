@@ -10,3 +10,4 @@ https://www.freepik.com/icons/application
 # TODO
 - Parse directory structure
 - Save library file
+- Display mesh
