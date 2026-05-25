@@ -14,7 +14,7 @@ Meshiverse is a 3D model library organizer built with Godot 4.5. It's designed t
 ./dev.sh
 
 # Alternative: Direct Godot command
-"/Applications/Godot v4.5.app/Contents/MacOS/Godot" godot/project.godot
+"/Applications/Godot v4.6.app/Contents/MacOS/Godot" godot/project.godot
 ```
 
 ### Version Control
