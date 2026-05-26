@@ -88,7 +88,6 @@ A "vault" is a directory containing 3D models with a `meshiverse.cfg` configurat
 
 ## Technical Notes
 
-- Built for Godot 4.5 with Forward Plus rendering
 - Uses GL compatibility rendering for broader hardware support
 - Native file dialogs enabled for better OS integration
 - Low processor mode enabled for battery efficiency
