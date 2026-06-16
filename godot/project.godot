@@ -27,9 +27,12 @@ ThemeManager="*res://singletons/theme_manager.gd"
 
 [debug]
 
+gdscript/warnings/directory_rules={
+"res://addons": 0,
+"res://addons/gdUnit4": 0
+}
 gdscript/warnings/untyped_declaration=2
 gdscript/warnings/inferred_declaration=1
-gdscript/warnings/exclude_addons=true
 
 [display]
 
@@ -47,14 +50,7 @@ text_editor/indent/size=4
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ai_assistant_hub/plugin.cfg", "res://addons/stl-io/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
-
-[plugins]
-
-ai_assistant_hub/llm_api="ollama_api"
-ai_assistant_hub/preferences/thinking_target=0
-ai_assistant_hub/preferences/skip_greeting=false
-ai_assistant_hub/preferences/always_scroll_to_bottom=false
+enabled=PackedStringArray("res://addons/stl-io/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
 [rendering]
 
