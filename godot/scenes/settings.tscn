@@ -8,6 +8,7 @@
 
 [sub_resource type="SystemFont" id="SystemFont_5p8wc"]
 font_names = PackedStringArray("Verdana")
+subpixel_positioning = 0
 
 [node name="Settings" type="Control" unique_id=1688192787]
 layout_mode = 3
@@ -45,7 +46,6 @@ dialog_hide_on_ok = true
 file_mode = 0
 display_mode = 1
 access = 2
-root_subfolder = "user://"
 use_native_dialog = true
 folder_creation_enabled = false
 
@@ -58,7 +58,6 @@ dialog_hide_on_ok = true
 file_mode = 2
 display_mode = 1
 access = 2
-root_subfolder = "user://"
 show_hidden_files = true
 use_native_dialog = true
 
