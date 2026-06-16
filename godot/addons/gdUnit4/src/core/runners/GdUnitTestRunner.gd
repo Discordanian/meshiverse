@@ -13,6 +13,8 @@ extends "res://addons/gdUnit4/src/core/runners/GdUnitTestSessionRunner.gd"
 @onready var _client: GdUnitTcpClient = $GdUnitTcpClient
 @onready var _version_label: Control = %Version
 
+const GdUnitTools := preload("res://addons/gdUnit4/src/core/GdUnitTools.gd")
+
 
 func _init() -> void:
 	super()
@@ -45,6 +47,9 @@ func _ready() -> void:
 func quit(code: int) -> void:
 	if code != RETURN_SUCCESS:
 		_state = EXIT
+	if is_instance_valid(_client):
+		_client.stop()
+	GdUnitTools.dispose_all()
 	await GdUnitMemoryObserver.gc_on_guarded_instances()
 	await super.quit(code)
 
