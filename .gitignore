@@ -19,3 +19,8 @@ godot/mono_crash.*.json
 **/.DS_Store
 
 save.sh
+
+# gdUnit4 generated output
+godot/reports/
+godot/addons/.gdunit_update/
+godot/addons/gdUnit4/tmp-update/

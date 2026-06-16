@@ -46,7 +46,7 @@ text_editor/indent/size=4
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ai_assistant_hub/plugin.cfg", "res://addons/stl-io/plugin.cfg")
+enabled=PackedStringArray("res://addons/ai_assistant_hub/plugin.cfg", "res://addons/stl-io/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
 [plugins]
 

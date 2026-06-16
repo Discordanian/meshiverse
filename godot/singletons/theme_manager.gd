@@ -18,14 +18,13 @@ func get_ui_scale_factor() -> float:
 		return scale_factor
 
 	# Fallback to resolution-based scaling if no scale factor detected
-	if screen_size.x >= 3840: #4k display
-		print("Using 4k scale factor: 3.0")
+	return resolution_based_scale_for_width(screen_size.x)
+
+static func resolution_based_scale_for_width(screen_width: float) -> float:
+	if screen_width >= 3840:
 		return 3.0
-
-	if screen_size.x >= 2560:
-		print("Using 2.5k scale factor: 2.5")
+	if screen_width >= 2560:
 		return 2.5
-
 	return 1.0
 
 # Apply UI scaling using Window's content_scale_factor (scales everything uniformly)

@@ -30,6 +30,8 @@ var _sorted_column: String = ""
 var _sort_descending: bool = false
 var _header_cells: Array[Control] = []  # Store references to header cells for sort indicators
 
+signal render_completed
+
 func _ready() -> void:
 	body_scroll.get_h_scroll_bar().value_changed.connect(_sync_horizontal_scroll)
 	body_scroll.get_v_scroll_bar().visibility_changed.connect(_sync_header_layout)
@@ -357,7 +359,12 @@ func _enforce_exact_column_widths(all_cells: Array[Array], column_widths: Array[
 			if abs(control.size.x - width) > 0.1:  # Allow small floating point differences
 				control.set_size(Vector2(width, control.size.y))
 
-	call_deferred("_sync_header_layout")
+	call_deferred("_on_render_layout_finished")
+
+
+func _on_render_layout_finished() -> void:
+	_sync_header_layout()
+	render_completed.emit()
 
 
 # Handle row selection - supports multi-select
