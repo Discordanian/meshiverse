@@ -3,6 +3,13 @@ extends Control
 @onready var TableRow: PackedScene = preload("res://scenes/table_row.tscn")
 @onready var TableCell: PackedScene = preload("res://scenes/table_cell.tscn")
 @onready var TableHeader: PackedScene = preload("res://scenes/table_header_cell.tscn")
+@onready var header_row: HBoxContainer = $VBoxContainer/HeaderHBox/HeaderScroll/HeaderRow
+@onready var header_scroll: ScrollContainer = $VBoxContainer/HeaderHBox/HeaderScroll
+@onready var body_scroll: ScrollContainer = $VBoxContainer/BodyScroll
+@onready var scroll_bar_spacer: Control = $VBoxContainer/HeaderHBox/ScrollBarSpacer
+
+const ROW_SEPARATION: float = 3.0
+const CHECKBOX_WIDTH: float = 20.0
 
 @export var data: DataFrame
 @export var max_column_width: float = 400.0  # Maximum width for a column in pixels (base, will be scaled)
@@ -23,6 +30,11 @@ var _sorted_column: String = ""
 var _sort_descending: bool = false
 var _header_cells: Array[Control] = []  # Store references to header cells for sort indicators
 
+func _ready() -> void:
+	body_scroll.get_h_scroll_bar().value_changed.connect(_sync_horizontal_scroll)
+	body_scroll.get_v_scroll_bar().visibility_changed.connect(_sync_header_layout)
+	body_scroll.resized.connect(_sync_header_layout)
+
 # Called when the node enters the scene tree for the first time.
 func Render() -> void:
 	if not data:
@@ -35,9 +47,6 @@ func Render() -> void:
 	var num_columns: int = data.columns.size()
 
 	# Store all cells for width calculation
-	# Create header row manually (not using TableRow which has a checkbox)
-	var header_row: HBoxContainer = HBoxContainer.new()
-	header_row.size_flags_horizontal = 0
 	var data_rows: Array[Node] = []
 	var all_cells: Array[Array] = []  # [column_index][row_index] = cell
 
@@ -46,13 +55,10 @@ func Render() -> void:
 		all_cells.append([])
 
 	# Build header row
-	$VBoxContainer.add_child(header_row)
-	$VBoxContainer.move_child(header_row, 0)
-
 	_header_cells.clear()
 	# Add checkbox to header row first
 	var header_checkbox: CheckBox = CheckBox.new()
-	header_checkbox.custom_minimum_size = Vector2(20, 0)
+	header_checkbox.custom_minimum_size = Vector2(CHECKBOX_WIDTH, 0)
 	header_checkbox.size_flags_horizontal = 0
 	header_checkbox.toggled.connect(_on_header_checkbox_toggled)
 	header_row.add_child(header_checkbox)
@@ -74,10 +80,7 @@ func Render() -> void:
 	_row_nodes.clear()
 	for r: int in range(row_count):
 		var row: Node = TableRow.instantiate()
-		# Ensure data rows don't expand to fill space
-		if row is HBoxContainer:
-			(row as HBoxContainer).size_flags_horizontal = 0
-		$VBoxContainer/ScrollContainer/Rows.add_child(row)
+		body_scroll.get_node("Rows").add_child(row)
 		data_rows.append(row)
 		_row_nodes.append(row)
 
@@ -114,6 +117,8 @@ func Render() -> void:
 
 	# Update header checkbox state
 	_update_header_checkbox()
+
+	_sync_header_layout()
 
 # Handle header click for sorting
 func _on_header_clicked(column_name: String) -> void:
@@ -181,19 +186,7 @@ func _calculate_column_widths(all_cells: Array[Array]) -> Array[float]:
 			if text.is_empty():
 				continue
 
-			# Get font from theme
-			var font: Font = _get_font_for_control(control)
-			if font:
-				# get_string_size() already accounts for the actual font size (which may be scaled)
-				# so the measurement is already in the correct pixel coordinate system
-				var text_size: Vector2 = font.get_string_size(text)
-				max_width = max(max_width, text_size.x)
-			else:
-				# Fallback: estimate width (rough approximation)
-				var cell_font_size: int = control.get_theme_font_size("font")
-				if cell_font_size <= 0:
-					cell_font_size = 12  # Base font size
-				max_width = max(max_width, text.length() * cell_font_size * 0.6)  # Rough estimate
+			max_width = max(max_width, control.get_combined_minimum_size().x)
 
 		# Add padding (already in correct coordinate system with content_scale_factor)
 		max_width += column_padding
@@ -207,6 +200,20 @@ func _calculate_column_widths(all_cells: Array[Array]) -> Array[float]:
 		column_widths.append(max_width)
 
 	return column_widths
+
+func _sync_header_layout() -> void:
+	if not is_node_ready():
+		return
+
+	var v_scroll: VScrollBar = body_scroll.get_v_scroll_bar()
+	scroll_bar_spacer.custom_minimum_size.x = v_scroll.size.x if v_scroll.visible else 0.0
+	_sync_horizontal_scroll()
+
+func _sync_horizontal_scroll() -> void:
+	if not is_node_ready():
+		return
+
+	header_scroll.scroll_horizontal = body_scroll.scroll_horizontal
 
 # Get the font used by a control from its theme
 func _get_font_for_control(control: Control) -> Font:
@@ -261,42 +268,24 @@ func _apply_column_widths(all_cells: Array[Array], column_widths: Array[float]) 
 			elif control is Button:
 				(control as Button).clip_contents = true
 
-	# Get separation value from the first row (should be same for all rows)
-	var row_separation: float = 3.0  # Default from table_row.tscn
-	if $VBoxContainer.get_child_count() > 0:
-		var first_row: Node = $VBoxContainer.get_child(0)
-		if first_row is HBoxContainer:
-			var hbox: HBoxContainer = first_row as HBoxContainer
-			# Try theme_override first (what's in the scene), then fallback to theme constant
-			if hbox.has_theme_constant_override("separation"):
-				row_separation = hbox.get_theme_constant("separation")
-			else:
-				row_separation = hbox.get_theme_constant("separation", "HBoxContainer")
-			if row_separation <= 0:
-				row_separation = 3.0
+	# Get separation value from the header row
+	var row_separation: float = ROW_SEPARATION
+	if header_row.has_theme_constant_override("separation"):
+		row_separation = header_row.get_theme_constant("separation")
+	elif header_row.get_theme_constant("separation", "HBoxContainer") > 0:
+		row_separation = header_row.get_theme_constant("separation", "HBoxContainer")
 
 	# Calculate total table width including separations
-	# Start with checkbox width (first column)
-	var checkbox_width: float = 20.0  # Match the checkbox custom_minimum_size
-	var total_width: float = checkbox_width + row_separation
+	var total_width: float = CHECKBOX_WIDTH + row_separation
 	for col_idx: int in range(num_columns):
 		total_width += column_widths[col_idx]
-		if col_idx < num_columns - 1:  # Add separation between columns, but not after last
+		if col_idx < num_columns - 1:
 			total_width += row_separation
 
-	# Ensure header row and data rows have consistent layout
-	# Get the header row (first child of VBoxContainer)
-	if $VBoxContainer.get_child_count() > 0:
-		var header_row: Node = $VBoxContainer.get_child(0)
-		if header_row is HBoxContainer:
-			var hbox: HBoxContainer = header_row as HBoxContainer
-			# Prevent the row from expanding - use shrink to use minimum size
-			hbox.size_flags_horizontal = 0
-			# Set minimum width to ensure consistent width with data rows
-			hbox.custom_minimum_size.x = total_width
+	header_row.size_flags_horizontal = 0
+	header_row.custom_minimum_size.x = total_width
 
-	# Ensure all data rows have the same layout behavior
-	var rows_container: Node = $VBoxContainer/ScrollContainer/Rows
+	var rows_container: Node = body_scroll.get_node("Rows")
 	if rows_container is Control:
 		# Set minimum width on the rows container to match header width
 		(rows_container as Control).custom_minimum_size.x = total_width
@@ -367,6 +356,8 @@ func _enforce_exact_column_widths(all_cells: Array[Array], column_widths: Array[
 			# Force the size again if it doesn't match (layout might have changed it)
 			if abs(control.size.x - width) > 0.1:  # Allow small floating point differences
 				control.set_size(Vector2(width, control.size.y))
+
+	call_deferred("_sync_header_layout")
 
 
 # Handle row selection - supports multi-select
@@ -459,21 +450,10 @@ func _update_header_checkbox() -> void:
 
 # Clear existing table rows
 func _clear_table() -> void:
-	# Clear header row if it exists
-	if $VBoxContainer.get_child_count() > 0:
-		var first_child: Node = $VBoxContainer.get_child(0)
-		if first_child.get_child_count() > 0:
-			# Check if it's a header row (has TableHeaderCell children)
-			var is_header: bool = false
-			for child: Node in first_child.get_children():
-				if child.get_class() == "Button" or "Header" in child.name:
-					is_header = true
-					break
-			if is_header:
-				first_child.queue_free()
+	for child: Node in header_row.get_children():
+		child.queue_free()
 
-	# Clear data rows
-	var rows_container: Node = $VBoxContainer/ScrollContainer/Rows
+	var rows_container: Node = body_scroll.get_node("Rows")
 	for child: Node in rows_container.get_children():
 		child.queue_free()
 

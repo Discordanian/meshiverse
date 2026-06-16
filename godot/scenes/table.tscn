@@ -22,13 +22,33 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1553495929]
+[node name="HeaderHBox" type="HBoxContainer" parent="VBoxContainer" unique_id=1208473621]
 layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 2
-vertical_scroll_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Rows" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=739086949]
+[node name="HeaderScroll" type="ScrollContainer" parent="VBoxContainer/HeaderHBox" unique_id=1983746502]
 layout_mode = 2
 size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 0
+
+[node name="HeaderRow" type="HBoxContainer" parent="VBoxContainer/HeaderHBox/HeaderScroll" unique_id=1549283710]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 3
+
+[node name="ScrollBarSpacer" type="Control" parent="VBoxContainer/HeaderHBox" unique_id=1672038491]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="BodyScroll" type="ScrollContainer" parent="VBoxContainer" unique_id=1553495929]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 1
+vertical_scroll_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="VBoxContainer/BodyScroll" unique_id=739086949]
+layout_mode = 2
+size_flags_horizontal = 0
 theme_override_constants/separation = 0
